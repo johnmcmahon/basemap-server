@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js"></script>
+    <style type="text/css">
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: lime;
+        }
+
+        #stats {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(255,255,255,.8);
+            padding: 1em;
+            z-index: 1001;
+            white-space: pre;
+            font-family: Ubuntu Mono, monospace;
+            font-size: 11px;
+            box-shadow: 10px 10px rgba(0, 0, 0, .2), 0 0 0 1px rgba(0, 0, 0, .1);
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="stats"></div>
+
+    <script>
+        const theme = location.search.substr(1) || 'silver'
+        const __map__ = L.map('map', {
+            zoom: JSON.parse(sessionStorage.getItem('zoom')) || 5,
+            center: JSON.parse(sessionStorage.getItem('center')) || {"lat": 30, "lng": -75},
+            layers: [
+                L.tileLayer(`http://127.0.0.1:8000/${theme}/{z}/{x}/{y}.png`),
+            ],
+        })
+
+        __map__.on('moveend zoomend', onRepaint)
+
+        onRepaint()
+
+        function onRepaint() {
+            sessionStorage.setItem('center', JSON.stringify(__map__.getCenter()))
+            sessionStorage.setItem('zoom', JSON.stringify(__map__.getZoom()))
+
+            document.querySelector('#stats').textContent = [
+                `center = ${JSON.stringify(__map__.getCenter(), null, 4)}\n`,
+                `extent = ${__map__.getBounds().toBBoxString().split(',').map(n => Math.round(n * 1000) / 1000).join(', ')}\n`,
+                `  zoom = ${__map__.getZoom()}\n`,
+            ].join('\n')
+        }
+    </script>
+</body>
+</html>

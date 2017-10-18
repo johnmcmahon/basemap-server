@@ -1,0 +1,247 @@
+<Map background-color="#101214" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+
+<Parameters>
+  <Parameter name="bounds">-180,-85.05112877980659,180,85.05112877980659</Parameter>
+  <Parameter name="center">0,0,2</Parameter>
+  <Parameter name="format">png8</Parameter>
+  <Parameter name="minzoom">0</Parameter>
+  <Parameter name="maxzoom">22</Parameter>
+  <Parameter name="scale">1</Parameter>
+  <Parameter name="metatile">2</Parameter>
+  <Parameter name="id">grey</Parameter>
+  <Parameter name="_updated">1507937629000</Parameter>
+  <Parameter name="tilejson">2.0.0</Parameter>
+  <Parameter name="scheme">xyz</Parameter>
+</Parameters>
+
+
+<Style filter-mode="first" name="countries">
+  <Rule>
+    <MaxScaleDenominator>3000000</MaxScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-opacity="0.5" stroke-width="3" />
+    <PolygonSymbolizer fill="#151819" />
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>3000000</MinScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-opacity="0.5" stroke-width="1" />
+    <PolygonSymbolizer fill="#151819" />
+  </Rule>
+</Style>
+<Style filter-mode="first" name="countries-coast-inner">
+  <Rule>
+    <LineSymbolizer stroke="#101214" stroke-width="5" />
+  </Rule>
+</Style>
+<Style filter-mode="first" name="countries-coast-out">
+  <Rule>
+    <LineSymbolizer stroke="#121516" stroke-width="20" />
+  </Rule>
+</Style>
+<Layer name="countries" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>countries-coast-out</StyleName>
+    <StyleName>countries-coast-inner</StyleName>
+    <StyleName>countries</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_admin_0_countries.shp</Parameter>
+       <Parameter name="id">countries</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="states-border">
+  <Rule>
+    <MaxScaleDenominator>3000000</MaxScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-linejoin="round" stroke-opacity="0.1" stroke-width="1" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>12500000</MaxScaleDenominator>
+    <MinScaleDenominator>3000000</MinScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-linejoin="round" stroke-opacity="0.05" stroke-width="1" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>25000000</MaxScaleDenominator>
+    <MinScaleDenominator>12500000</MinScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-linejoin="round" stroke-opacity="0.03" stroke-width="1" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>50000000</MaxScaleDenominator>
+    <MinScaleDenominator>25000000</MinScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-linejoin="round" stroke-opacity="0.03" stroke-width="0.5" />
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>50000000</MinScaleDenominator>
+    <LineSymbolizer stroke="#16252d" stroke-linejoin="round" stroke-opacity="0" stroke-width="0.5" />
+  </Rule>
+</Style>
+<Layer name="states" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>states-border</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_admin_1_states_provinces.shp</Parameter>
+       <Parameter name="id">states</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="lakes">
+  <Rule>
+    <MaxScaleDenominator>50000000</MaxScaleDenominator>
+    <PolygonSymbolizer fill="#121516" />
+    <LineSymbolizer stroke="#16252d" stroke-opacity="0.5" stroke-width="0.5" />
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>50000000</MinScaleDenominator>
+    <PolygonSymbolizer fill="#121516" />
+    <LineSymbolizer stroke="#16252d" stroke-opacity="0" stroke-width="0.5" />
+  </Rule>
+</Style>
+<Layer name="lakes" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>lakes</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_lakes.shp</Parameter>
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="guidelines">
+  <Rule>
+    <Filter>([name] = 'International Date Line')</Filter>
+    <LineSymbolizer offset="1" stroke="#194d19" stroke-dasharray="2, 2" stroke-width="1" />
+  </Rule>
+</Style>
+<Layer name="guidelines" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>guidelines</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_geographic_lines.shp</Parameter>
+       <Parameter name="id">guidelines</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="labels__countries">
+  <Rule>
+    <MinScaleDenominator>100000000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 3)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="0.5" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>1500000</MaxScaleDenominator>
+    <Filter>([LABELRANK] &lt; 3)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="1" size="15">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>25000000</MaxScaleDenominator>
+    <MinScaleDenominator>1500000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 3)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="1" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>100000000</MaxScaleDenominator>
+    <MinScaleDenominator>25000000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 3)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="0.5" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>1500000</MaxScaleDenominator>
+    <Filter>([LABELRANK] &lt; 10)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="1" size="15">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>25000000</MaxScaleDenominator>
+    <MinScaleDenominator>1500000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 10)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="1" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>100000000</MaxScaleDenominator>
+    <MinScaleDenominator>25000000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 10)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="0.5" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>100000000</MinScaleDenominator>
+    <Filter>([LABELRANK] &lt; 10)</Filter>
+    <TextSymbolizer character-spacing="-0.4" face-name="Muli SemiBold" fill="#415058" margin="10" opacity="0" size="12">[NAME]</TextSymbolizer>
+  </Rule>
+</Style>
+<Layer name="labels__countries" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>labels__countries</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_admin_0_countries.shp</Parameter>
+       <Parameter name="id">labels__countries</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="labels__cities">
+  <Rule>
+    <MaxScaleDenominator>400000</MaxScaleDenominator>
+    <Filter>([FEATURECLA].match('Admin-[0-1].*')) and ([LABELRANK] &lt; 7)</Filter>
+    <TextSymbolizer dx="6" face-name="Muli SemiBold" fill="#415058" opacity="0.7" size="12">[NAME]</TextSymbolizer>
+    <MarkersSymbolizer fill="#415058" opacity="0.7" stroke-width="0" width="4" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>1500000</MaxScaleDenominator>
+    <MinScaleDenominator>400000</MinScaleDenominator>
+    <Filter>([FEATURECLA].match('Admin-[0-1].*')) and ([LABELRANK] &lt; 7)</Filter>
+    <TextSymbolizer dx="6" face-name="Muli SemiBold" fill="#415058" opacity="0.5" size="12">[NAME]</TextSymbolizer>
+    <MarkersSymbolizer fill="#415058" opacity="0.5" stroke-width="0" width="4" />
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>25000000</MaxScaleDenominator>
+    <MinScaleDenominator>1500000</MinScaleDenominator>
+    <Filter>([FEATURECLA].match('Admin-[0-1].*')) and ([LABELRANK] &lt; 7)</Filter>
+    <TextSymbolizer dx="6" face-name="Muli SemiBold" fill="#415058" opacity="0.2" size="10">[NAME]</TextSymbolizer>
+    <MarkersSymbolizer fill="#415058" opacity="0.2" stroke-width="0" width="4" />
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>25000000</MinScaleDenominator>
+    <Filter>([FEATURECLA].match('Admin-[0-1].*')) and ([LABELRANK] &lt; 7)</Filter>
+    <TextSymbolizer dx="6" face-name="Muli SemiBold" fill="#415058" opacity="0" size="10">[NAME]</TextSymbolizer>
+    <MarkersSymbolizer fill="#415058" opacity="0" stroke-width="0" width="4" />
+  </Rule>
+</Style>
+<Layer name="labels__cities" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>labels__cities</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_populated_places.shp</Parameter>
+       <Parameter name="id">labels__cities</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+<Style filter-mode="first" name="labels__marine">
+  <Rule>
+    <Filter>([scalerank] = 0)</Filter>
+    <TextSymbolizer face-name="Muli Italic" fill="#415058" opacity="0.15" size="15" text-transform="capitalize">[name]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MaxScaleDenominator>50000000</MaxScaleDenominator>
+    <TextSymbolizer face-name="Muli Italic" fill="#415058" opacity="0.3" size="10">[name]</TextSymbolizer>
+  </Rule>
+  <Rule>
+    <MinScaleDenominator>50000000</MinScaleDenominator>
+    <TextSymbolizer face-name="Muli Italic" fill="#415058" opacity="0" size="10">[name]</TextSymbolizer>
+  </Rule>
+</Style>
+<Layer name="labels__marine" srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    <StyleName>labels__marine</StyleName>
+    <Datasource>
+       <Parameter name="file">../shapefiles/ne_10m_geography_marine_polys.shp</Parameter>
+       <Parameter name="id">labels__marine</Parameter>
+       <Parameter name="project">silver</Parameter>
+       <Parameter name="srs" />
+       <Parameter name="type">shape</Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>

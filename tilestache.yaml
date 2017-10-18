@@ -1,0 +1,21 @@
+layers:
+    grey:
+        projection: spherical mercator
+        provider:
+            name: mapnik
+            mapfile: /server/themes/grey.xml
+    sepia:
+        projection: spherical mercator
+        provider:
+            name: mapnik
+            mapfile: /server/themes/sepia.xml
+    silver:
+        projection: spherical mercator
+        provider:
+            name: mapnik
+            mapfile: /server/themes/silver.xml
+
+
+cache:
+    name: Disk
+    path: /server/cache
