@@ -4,16 +4,28 @@ layers:
         provider:
             name: mapnik
             mapfile: /server/themes/grey.xml
+        metatile:
+            rows: 4
+            columns: 4
+            buffer: 128
     sepia:
         projection: WGS84
         provider:
             name: mapnik
             mapfile: /server/themes/sepia.xml
+        metatile:
+            rows: 4
+            columns: 4
+            buffer: 128
     silver:
         projection: WGS84
         provider:
             name: mapnik
             mapfile: /server/themes/silver.xml
+        metatile:
+            rows: 4
+            columns: 4
+            buffer: 128
 
 
 cache:
