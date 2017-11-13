@@ -34,6 +34,7 @@
     <script>
         const theme = location.search.substr(1) || 'silver'
         const __map__ = L.map('map', {
+            crs: L.CRS.EPSG4326,
             zoom: JSON.parse(sessionStorage.getItem('zoom')) || 5,
             center: JSON.parse(sessionStorage.getItem('center')) || {"lat": 30, "lng": -75},
             layers: [

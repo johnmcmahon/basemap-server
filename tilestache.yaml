@@ -1,16 +1,16 @@
 layers:
     grey:
-        projection: spherical mercator
+        projection: WGS84
         provider:
             name: mapnik
             mapfile: /server/themes/grey.xml
     sepia:
-        projection: spherical mercator
+        projection: WGS84
         provider:
             name: mapnik
             mapfile: /server/themes/sepia.xml
     silver:
-        projection: spherical mercator
+        projection: WGS84
         provider:
             name: mapnik
             mapfile: /server/themes/silver.xml

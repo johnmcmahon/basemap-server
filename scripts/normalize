@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+
+"""
+normalize
+
+Normalize all file paths to shapefiles in all available map styles.
+"""
+
+import argparse
+import glob
+import os
+import xml.etree.ElementTree as etree
+
+
+BASE_PATH       = os.path.dirname(os.path.dirname(__file__))
+THEMES_DIR      = os.path.join(BASE_PATH, 'themes')
+SHAPEFILES_PATH = os.path.join(BASE_PATH, 'shapefiles')
+
+PROJ_WGS84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'
+
+
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--unsafe', action='store_true')
+    parser.add_argument('--preserve-root-srs', action='store_true')
+
+    options = parser.parse_args()
+
+    for mapfile_path in glob.glob('{}/**.xml'.format(THEMES_DIR)):
+        mapfile_name = os.path.relpath(mapfile_path)
+
+        print('\n  >>>  {}:\n'.format(mapfile_name))
+
+        doc = etree.parse(mapfile_path)
+
+        root_node = doc.getroot()
+        root_srs = root_node.get('srs')
+        if root_srs and not options.preserve_root_srs:
+            print('       replace root SRS "{}"'.format(root_srs))
+            # root_node.attrib.pop('srs', '')
+            root_node.attrib['srs'] = PROJ_WGS84
+
+        for node in doc.findall('.//Parameter[@name="file"]'):  # type: etree.Element
+            datasource_path = os.path.join(os.path.relpath(SHAPEFILES_PATH, THEMES_DIR), os.path.basename(node.text))
+
+            if datasource_path == node.text:
+                continue  # Nothing to do
+
+            print('       rewrite path "{}" -> "{}"'.format(node.text, datasource_path))
+            node.text = datasource_path
+
+        warnings = set()
+        for node in doc.findall('.//Parameter[@name="host"]'):
+            if not node.text:
+                continue
+
+            host = node.text.lower().strip()
+            if host not in ('localhost', '127.0.0.1'):
+                warnings.add('found database hostname "{}"'.format(host))
+
+        for node in doc.findall('.//Parameter[@name="user"]'):
+            warnings.add('found database username "{}"'.format(node.text))
+
+        for node in doc.findall('.//Parameter[@name="password"]'):
+            warnings.add('found database password')
+
+        if warnings:
+            print(
+                '\033[31m',
+                '       \u26A0  Found potentially dangerous parameters in "{}":'.format(mapfile_path),
+                '',
+                '\n'.join('         * {}'.format(s) for s in warnings),
+                '\033[0m',
+                sep='\n',
+            )
+
+            if not options.unsafe:
+                print('\nHalting; to ignore these issues, rerun command with --unsafe')
+                exit(1)
+
+        doc.write(mapfile_path)
+
+    print()
+
+
+if __name__ == '__main__':
+    main()
