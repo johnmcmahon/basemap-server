@@ -26,6 +26,25 @@ layers:
             rows: 4
             columns: 4
             buffer: 128
+    osm:
+        projection: WGS84
+        provider:
+            name: 'proxy'
+            url: 'https://osm.int.dev.east.paas.geointservices.io/osm_tiles_pc/{Z}/{X}/{Y}.png64'
+    aerial:
+        projection: WGS84
+        provider:
+            class: 'providers:ExtendedProxy'
+            kwargs:
+                url: 'https://hiperlook.geointservices.io/cgi-bin/WMTSProxy.exe/default.map/10/OGC:4326/{Z}/{X}/{Y}.png'
+                headers:
+                    Authorization: '____AUTH____'
+    aerial-evwhs:
+        projection: WGS84
+        provider:
+            class: 'providers:ExtendedProxy'
+            kwargs:
+                url: 'https://evwhs.digitalglobe.com/earthservice/wmtsaccess?connectid=____CONNECTID____&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=DigitalGlobe:ImageryTileService&FORMAT=image/png&TileRow={Y}&TileCol={X}&TileMatrixSet=EPSG:4326&TileMatrix=EPSG:4326:{Z}&featureProfile=Consumer_Profile'
 
 
 cache:
