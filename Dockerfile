@@ -17,4 +17,4 @@ ADD providers.py .
 
 VOLUME /server/cache
 
-CMD ["gunicorn", "wsgi:application", "-b", "0.0.0.0:80", "--access-logfile", "-"]
+CMD ["gunicorn", "wsgi:application", "-w", "8", "-t", "4", "-b", "0.0.0.0:80", "--access-logfile", "-"]
