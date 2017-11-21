@@ -13,6 +13,7 @@ ADD shapefiles shapefiles
 
 ADD tilestache.yaml .
 ADD wsgi.py .
+ADD providers.py .
 
 VOLUME /server/cache
 
